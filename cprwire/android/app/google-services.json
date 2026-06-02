@@ -1,0 +1,90 @@
+{
+  "project_info": {
+    "project_number": "147360425243",
+    "project_id": "cprwire-igjnyu",
+    "storage_bucket": "cprwire-igjnyu.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:147360425243:android:c6ba67095ddbadc7ec5fbe",
+        "android_client_info": {
+          "package_name": "com.example.cprwire"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "147360425243-4elea64tap1l4gl0057bcopjg58083de.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDkStJoCTSdSF06FCi0gLOiOmITkXlEnkI"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "147360425243-4elea64tap1l4gl0057bcopjg58083de.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "147360425243-m72jpn2p1c69piraar82d1oug7l1sloo.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.mycompany.cprwire"
+              }
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:147360425243:android:d97757fa189f3750ec5fbe",
+        "android_client_info": {
+          "package_name": "com.mycompany.cprwire"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "147360425243-shnfrngre89trgfk3plqujta4degbn22.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.mycompany.cprwire",
+            "certificate_hash": "9bbb3186b2189ef16d8f272bdab59362c395cbb4"
+          }
+        },
+        {
+          "client_id": "147360425243-4elea64tap1l4gl0057bcopjg58083de.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDkStJoCTSdSF06FCi0gLOiOmITkXlEnkI"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "147360425243-4elea64tap1l4gl0057bcopjg58083de.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "147360425243-m72jpn2p1c69piraar82d1oug7l1sloo.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.mycompany.cprwire"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
