@@ -1,5 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import '/auth/auth_validators.dart';
 import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
 import '/flutter_flow/flutter_flow_widgets.dart';
@@ -30,6 +31,8 @@ class _Register5WidgetState extends State<Register5Widget> {
   final scaffoldKey = GlobalKey<ScaffoldState>();
   bool _isLoading = false;
   String _errorMessage = '';
+  String? _emailError;
+  String? _passwordError;
 
   @override
   void initState() {
@@ -90,20 +93,18 @@ class _Register5WidgetState extends State<Register5Widget> {
 
   Future<void> _createAccount() async {
     final email = _model.textController1!.text.trim();
-    final password = _model.textController2!.text.trim();
+    final password = _model.textController2!.text;
 
-    // Validate
-    if (email.isEmpty || password.isEmpty) {
-      setState(() {
-        _errorMessage = 'Please enter email and password!';
-      });
-      return;
-    }
+    final emailError = validateEmail(email);
+    final passwordError = validatePassword(password);
 
-    if (password.length < 6) {
-      setState(() {
-        _errorMessage = 'Password must be at least 6 characters!';
-      });
+    setState(() {
+      _emailError = emailError;
+      _passwordError = passwordError;
+      _errorMessage = '';
+    });
+
+    if (emailError != null || passwordError != null) {
       return;
     }
 
@@ -163,7 +164,7 @@ class _Register5WidgetState extends State<Register5Widget> {
       context.pushNamed(AllsetWidget.routeName);
     } on FirebaseAuthException catch (e) {
       setState(() {
-        _errorMessage = e.message ?? 'An error occurred';
+        _errorMessage = mapFirebaseAuthError(e);
       });
     } catch (e) {
       setState(() {
@@ -365,6 +366,18 @@ class _Register5WidgetState extends State<Register5Widget> {
                     ),
                   ),
 
+                  if (_emailError != null)
+                    Padding(
+                      padding: EdgeInsets.only(top: 5.0),
+                      child: Text(
+                        _emailError!,
+                        style: TextStyle(
+                          color: Colors.red,
+                          fontSize: 14.0,
+                        ),
+                      ),
+                    ),
+
                   SizedBox(height: 20),
 
                   // Password Label
@@ -400,6 +413,18 @@ class _Register5WidgetState extends State<Register5Widget> {
                       fontSize: 18.0,
                     ),
                   ),
+
+                  if (_passwordError != null)
+                    Padding(
+                      padding: EdgeInsets.only(top: 5.0),
+                      child: Text(
+                        _passwordError!,
+                        style: TextStyle(
+                          color: Colors.red,
+                          fontSize: 14.0,
+                        ),
+                      ),
+                    ),
 
                   SizedBox(height: 10),
 

@@ -1,5 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import '/auth/auth_validators.dart';
 import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
 import '/flutter_flow/flutter_flow_widgets.dart';
@@ -22,6 +23,8 @@ class _CreateAccountWidgetState extends State<CreateAccountWidget> {
   final _passwordController = TextEditingController();
   bool _isLoading = false;
   String _errorMessage = '';
+  String? _emailError;
+  String? _passwordError;
 
   @override
   void dispose() {
@@ -30,41 +33,56 @@ class _CreateAccountWidgetState extends State<CreateAccountWidget> {
     super.dispose();
   }
 
- Future<void> _createAccount() async {
-  setState(() {
-    _isLoading = true;
-    _errorMessage = '';
-  });
-  try {
-    // 1. Gumawa ng account sa Firebase Auth
-    UserCredential userCredential = await FirebaseAuth.instance
-        .createUserWithEmailAndPassword(
-          email: _emailController.text.trim(),
-          password: _passwordController.text.trim(),
-        );
+  Future<void> _createAccount() async {
+    final emailError = validateEmail(_emailController.text);
+    final passwordError = validatePassword(_passwordController.text);
 
-    // 2. I-save din sa Firestore
-    await FirebaseFirestore.instance
-        .collection('users')
-        .doc(userCredential.user!.uid)
-        .set({
-          'email': _emailController.text.trim(),
-          'createdAt': DateTime.now(),
-          'uid': userCredential.user!.uid,
-          'role': 'user',
-        });
+    setState(() {
+      _emailError = emailError;
+      _passwordError = passwordError;
+      _errorMessage = '';
+    });
 
-    context.pushNamed(AllsetWidget.routeName);
-  } on FirebaseAuthException catch (e) {
+    if (emailError != null || passwordError != null) {
+      return;
+    }
+
     setState(() {
-      _errorMessage = e.message ?? 'An error occurred';
+      _isLoading = true;
+      _errorMessage = '';
     });
-  } finally {
-    setState(() {
-      _isLoading = false;
-    });
+
+    try {
+      final email = _emailController.text.trim();
+      final password = _passwordController.text;
+
+      UserCredential userCredential = await FirebaseAuth.instance
+          .createUserWithEmailAndPassword(
+        email: email,
+        password: password,
+      );
+
+      await FirebaseFirestore.instance
+          .collection('users')
+          .doc(userCredential.user!.uid)
+          .set({
+        'email': email,
+        'createdAt': DateTime.now(),
+        'uid': userCredential.user!.uid,
+        'role': 'user',
+      });
+
+      context.pushNamed(AllsetWidget.routeName);
+    } on FirebaseAuthException catch (e) {
+      setState(() {
+        _errorMessage = mapFirebaseAuthError(e);
+      });
+    } finally {
+      setState(() {
+        _isLoading = false;
+      });
+    }
   }
-}
 
   @override
   Widget build(BuildContext context) {
@@ -100,6 +118,7 @@ class _CreateAccountWidgetState extends State<CreateAccountWidget> {
               SizedBox(height: 30),
               TextField(
                 controller: _emailController,
+                keyboardType: TextInputType.emailAddress,
                 style: TextStyle(color: Colors.white),
                 decoration: InputDecoration(
                   labelText: 'Email',
@@ -112,6 +131,17 @@ class _CreateAccountWidgetState extends State<CreateAccountWidget> {
                   ),
                 ),
               ),
+              if (_emailError != null)
+                Padding(
+                  padding: EdgeInsets.only(top: 5.0),
+                  child: Align(
+                    alignment: Alignment.centerLeft,
+                    child: Text(
+                      _emailError!,
+                      style: TextStyle(color: Colors.red, fontSize: 14),
+                    ),
+                  ),
+                ),
               SizedBox(height: 16),
               TextField(
                 controller: _passwordController,
@@ -128,6 +158,17 @@ class _CreateAccountWidgetState extends State<CreateAccountWidget> {
                   ),
                 ),
               ),
+              if (_passwordError != null)
+                Padding(
+                  padding: EdgeInsets.only(top: 5.0),
+                  child: Align(
+                    alignment: Alignment.centerLeft,
+                    child: Text(
+                      _passwordError!,
+                      style: TextStyle(color: Colors.red, fontSize: 14),
+                    ),
+                  ),
+                ),
               SizedBox(height: 10),
               if (_errorMessage.isNotEmpty)
                 Text(_errorMessage, style: TextStyle(color: Colors.red)),

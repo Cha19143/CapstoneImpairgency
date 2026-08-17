@@ -1,5 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import '/auth/auth_validators.dart';
 import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
 import '/flutter_flow/flutter_flow_widgets.dart';
@@ -23,6 +24,8 @@ class _LoginWidgetState extends State<LoginWidget> {
   bool _isLoading = false;
   bool _obscurePassword = true;
   String _errorMessage = '';
+  String? _emailError;
+  String? _passwordError;
 
   @override
   void dispose() {
@@ -32,40 +35,54 @@ class _LoginWidgetState extends State<LoginWidget> {
   }
 
   Future<void> _login() async {
+    final email = _emailController.text.trim();
+    final password = _passwordController.text;
+
+    final emailError = validateEmail(email);
+    final passwordError =
+        password.isEmpty ? 'Password is required.' : null;
+
+    setState(() {
+      _emailError = emailError;
+      _passwordError = passwordError;
+      _errorMessage = '';
+    });
+
+    if (emailError != null || passwordError != null) {
+      return;
+    }
+
     setState(() {
       _isLoading = true;
       _errorMessage = '';
     });
 
     try {
-final userCredential = await FirebaseAuth.instance.signInWithEmailAndPassword(
-  email: _emailController.text.trim(),
-  password: _passwordController.text.trim(),
-);
+      final userCredential =
+          await FirebaseAuth.instance.signInWithEmailAndPassword(
+        email: email,
+        password: password,
+      );
 
-final uid = userCredential.user!.uid;
+      final uid = userCredential.user!.uid;
 
-final userDoc = await FirebaseFirestore.instance
-    .collection('users')
-    .doc(uid)
-    .get();
+      final userDoc = await FirebaseFirestore.instance
+          .collection('users')
+          .doc(uid)
+          .get();
 
-final role = userDoc.data()?['role'];
+      final role = userDoc.data()?['role'];
 
-print('UID: $uid');
-print('Document exists: ${userDoc.exists}');
-print('Role value: "$role"');
-
-if (role == 'admin') {
-  context.pushNamed(AdmindashboardWidget.routeName);
-} else if (role == 'guardian') {
-  context.pushNamed(GuardianMainDWidget.routeName);
-} else {
-  context.goNamed(MainDashboardWidget.routeName);
-}
+      if (role == 'admin') {
+        context.pushNamed(AdmindashboardWidget.routeName);
+      } else if (role == 'guardian') {
+        context.pushNamed(GuardianMainDWidget.routeName);
+      } else {
+        context.goNamed(MainDashboardWidget.routeName);
+      }
     } on FirebaseAuthException catch (e) {
       setState(() {
-        _errorMessage = e.message ?? 'Login failed. Try again.';
+        _errorMessage = mapFirebaseAuthError(e);
       });
     } finally {
       setState(() {
@@ -149,6 +166,17 @@ if (role == 'admin') {
                     ),
                   ),
                 ),
+                if (_emailError != null)
+                  Padding(
+                    padding: EdgeInsets.only(top: 5.0),
+                    child: Align(
+                      alignment: Alignment.centerLeft,
+                      child: Text(
+                        _emailError!,
+                        style: TextStyle(color: Colors.red, fontSize: 14),
+                      ),
+                    ),
+                  ),
                 SizedBox(height: 24),
 
                 // PASSWORD
@@ -190,6 +218,17 @@ if (role == 'admin') {
                     ),
                   ),
                 ),
+                if (_passwordError != null)
+                  Padding(
+                    padding: EdgeInsets.only(top: 5.0),
+                    child: Align(
+                      alignment: Alignment.centerLeft,
+                      child: Text(
+                        _passwordError!,
+                        style: TextStyle(color: Colors.red, fontSize: 14),
+                      ),
+                    ),
+                  ),
                 SizedBox(height: 10),
 
                 // Forgot Password
@@ -206,15 +245,26 @@ if (role == 'admin') {
                         return;
                       }
 
+                      final emailFormatError = validateEmail(email);
+                      if (emailFormatError != null) {
+                        setState(() {
+                          _emailError = emailFormatError;
+                          _errorMessage = '';
+                        });
+                        return;
+                      }
+
                       try {
-                        await FirebaseAuth.instance.sendPasswordResetEmail(email: email);
+                        await FirebaseAuth.instance
+                            .sendPasswordResetEmail(email: email);
 
                         setState(() {
-                          _errorMessage = 'Password reset link sent! Check your email or spam folder.';
+                          _errorMessage =
+                              'Password reset link sent! Check your email or spam folder.';
                         });
                       } on FirebaseAuthException catch (e) {
                         setState(() {
-                          _errorMessage = e.message ?? 'Failed to send password reset email.';
+                          _errorMessage = mapFirebaseAuthError(e);
                         });
                       }
                     },

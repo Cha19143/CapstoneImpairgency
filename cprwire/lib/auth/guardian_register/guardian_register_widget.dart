@@ -1,5 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import '/auth/auth_validators.dart';
 import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
 import '/flutter_flow/flutter_flow_widgets.dart';
@@ -28,6 +29,9 @@ class _GuardianRegisterWidgetState extends State<GuardianRegisterWidget> {
   bool _isLoading = false;
   bool _obscurePassword = true;
   String _errorMessage = '';
+  String? _emailError;
+  String? _passwordError;
+  String? _viEmailError;
 
   @override
   void dispose() {
@@ -41,13 +45,27 @@ class _GuardianRegisterWidgetState extends State<GuardianRegisterWidget> {
   }
 
   Future<void> _register() async {
-    // Basic validation
     if (_firstNameController.text.trim().isEmpty ||
         _lastNameController.text.trim().isEmpty ||
-        _emailController.text.trim().isEmpty ||
-        _passwordController.text.trim().isEmpty ||
         _phoneController.text.trim().isEmpty) {
       setState(() => _errorMessage = 'Please fill in all required fields.');
+      return;
+    }
+
+    final emailError = validateEmail(_emailController.text);
+    final passwordError = validatePassword(_passwordController.text);
+    final viEmail = _viEmailController.text.trim();
+    final viEmailError =
+        viEmail.isNotEmpty ? validateEmail(viEmail) : null;
+
+    setState(() {
+      _emailError = emailError;
+      _passwordError = passwordError;
+      _viEmailError = viEmailError;
+      _errorMessage = '';
+    });
+
+    if (emailError != null || passwordError != null || viEmailError != null) {
       return;
     }
 
@@ -116,7 +134,7 @@ class _GuardianRegisterWidgetState extends State<GuardianRegisterWidget> {
       }
     } on FirebaseAuthException catch (e) {
       setState(() {
-        _errorMessage = e.message ?? 'Registration failed. Please try again.';
+        _errorMessage = mapFirebaseAuthError(e);
       });
     } catch (e) {
       setState(() {
@@ -232,6 +250,14 @@ class _GuardianRegisterWidgetState extends State<GuardianRegisterWidget> {
                   keyboardType: TextInputType.emailAddress,
                   suffixIcon: const Icon(Icons.mail_outline),
                 ),
+                if (_emailError != null)
+                  Padding(
+                    padding: const EdgeInsets.only(top: 5.0),
+                    child: Text(
+                      _emailError!,
+                      style: const TextStyle(color: Colors.red, fontSize: 13),
+                    ),
+                  ),
                 const SizedBox(height: 20),
 
                 // Password
@@ -250,6 +276,14 @@ class _GuardianRegisterWidgetState extends State<GuardianRegisterWidget> {
                         setState(() => _obscurePassword = !_obscurePassword),
                   ),
                 ),
+                if (_passwordError != null)
+                  Padding(
+                    padding: const EdgeInsets.only(top: 5.0),
+                    child: Text(
+                      _passwordError!,
+                      style: const TextStyle(color: Colors.red, fontSize: 13),
+                    ),
+                  ),
                 const SizedBox(height: 20),
 
                 // Phone Number
@@ -283,6 +317,14 @@ class _GuardianRegisterWidgetState extends State<GuardianRegisterWidget> {
                   keyboardType: TextInputType.emailAddress,
                   suffixIcon: const Icon(Icons.link),
                 ),
+                if (_viEmailError != null)
+                  Padding(
+                    padding: const EdgeInsets.only(top: 5.0),
+                    child: Text(
+                      _viEmailError!,
+                      style: const TextStyle(color: Colors.red, fontSize: 13),
+                    ),
+                  ),
                 const SizedBox(height: 20),
 
                 // Error message
