@@ -140,7 +140,7 @@ class _Register4WidgetState extends State<Register4Widget> {
                       font: GoogleFonts.interTight(
                         fontWeight: FontWeight.bold,
                       ),
-                      color: FlutterFlowTheme.of(context).secondaryBackground,
+                      color: Colors.white,
                       fontSize: 50.0,
                       fontWeight: FontWeight.bold,
                     ),
@@ -167,7 +167,7 @@ class _Register4WidgetState extends State<Register4Widget> {
                             font: GoogleFonts.interTight(
                                 fontWeight: FontWeight.bold),
                             color:
-                                FlutterFlowTheme.of(context).secondaryBackground,
+                                Colors.white,
                             fontSize: 35.0,
                             fontWeight: FontWeight.bold,
                           ),

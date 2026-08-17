@@ -163,7 +163,7 @@ class _Register5WidgetState extends State<Register5Widget> {
           'accessToken': _emailJsPrivateKey,
           'template_params': {
             'email': email,
-            'name': email.split('@').first,
+            'name': 'ImpairGency',
             'otp_code': otpCode,
           },
         }),
@@ -357,7 +357,7 @@ class _Register5WidgetState extends State<Register5Widget> {
                       font: GoogleFonts.interTight(
                         fontWeight: FontWeight.bold,
                       ),
-                      color: FlutterFlowTheme.of(context).secondaryBackground,
+                      color: Colors.white,
                       fontSize: 50.0,
                       fontWeight: FontWeight.bold,
                     ),
@@ -499,7 +499,7 @@ class _Register5WidgetState extends State<Register5Widget> {
                       ),
                     ),
                     style: TextStyle(
-                      color: FlutterFlowTheme.of(context).accent1,
+                      color: Colors.white,
                       fontSize: 18.0,
                     ),
                   ),
@@ -534,7 +534,7 @@ class _Register5WidgetState extends State<Register5Widget> {
                       ),
                     ),
                     style: TextStyle(
-                      color: FlutterFlowTheme.of(context).accent1,
+                      color: Colors.white,
                       fontSize: 18.0,
                     ),
                   ),
@@ -583,7 +583,7 @@ class _Register5WidgetState extends State<Register5Widget> {
                         counterText: '',
                       ),
                       style: TextStyle(
-                        color: FlutterFlowTheme.of(context).accent1,
+                        color: Colors.white,
                         fontSize: 18.0,
                       ),
                     ),
