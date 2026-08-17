@@ -284,6 +284,24 @@ class _Register5WidgetState extends State<Register5Widget> {
 
       final nameData = _extractNameFromEmail(email);
 
+      // Suportahan ang parehong: multiple contacts (mula sa contact picker)
+      // at single contact (mula sa "Add contact manually")
+      List<Map<String, dynamic>> contactsList = [];
+      final rawContacts = widget.registrationData['contacts'];
+      if (rawContacts is List && rawContacts.isNotEmpty) {
+        contactsList = rawContacts
+            .map((c) => Map<String, dynamic>.from(c as Map))
+            .toList();
+      } else if (widget.registrationData['contactName'] != null &&
+          widget.registrationData['contactName'] != '') {
+        contactsList = [
+          {
+            'name': widget.registrationData['contactName'],
+            'number': widget.registrationData['contactNumber'],
+          }
+        ];
+      }
+
       await FirebaseFirestore.instance
           .collection('users')
           .doc(userCredential.user!.uid)
@@ -294,15 +312,7 @@ class _Register5WidgetState extends State<Register5Widget> {
         'visionType': widget.registrationData['visionType'] ?? '',
         'hasDevice': widget.registrationData['hasDevice'] ?? false,
         'deviceId': widget.registrationData['deviceId'] ?? '',
-        'contacts': (widget.registrationData['contactName'] != null &&
-                widget.registrationData['contactName'] != '')
-            ? [
-                {
-                  'name': widget.registrationData['contactName'],
-                  'number': widget.registrationData['contactNumber'],
-                }
-              ]
-            : [],
+        'contacts': contactsList,
         'role': 'visually_impaired',
         'createdAt': DateTime.now(),
         'uid': userCredential.user!.uid,

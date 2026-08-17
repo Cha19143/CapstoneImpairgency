@@ -1,3 +1,4 @@
+import 'package:flutter_contacts/flutter_contacts.dart';
 import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
 import '/flutter_flow/flutter_flow_widgets.dart';
@@ -6,6 +7,7 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:percent_indicator/percent_indicator.dart';
 import 'register4_model.dart';
+import 'contact_picker_widget.dart';
 export 'register4_model.dart';
 
 class Register4Widget extends StatefulWidget {
@@ -26,6 +28,7 @@ class Register4Widget extends StatefulWidget {
 class _Register4WidgetState extends State<Register4Widget> {
   late Register4Model _model;
   final scaffoldKey = GlobalKey<ScaffoldState>();
+  bool _isRequestingPermission = false;
 
   @override
   void initState() {
@@ -40,7 +43,6 @@ class _Register4WidgetState extends State<Register4Widget> {
   }
 
   void _goToAddContact() {
-    // I-pass ang registrationData sa AddContact screen
     context.pushNamed(
       AddcontactWidget.routeName,
       extra: widget.registrationData,
@@ -48,11 +50,9 @@ class _Register4WidgetState extends State<Register4Widget> {
   }
 
   void _skipContact() {
-    // Walang contact — i-pass ang registrationData na walang contact
     final updatedData = {
       ...widget.registrationData,
-      'contactName': '',
-      'contactNumber': '',
+      'contacts': [],
     };
 
     context.pushNamed(
@@ -61,19 +61,60 @@ class _Register4WidgetState extends State<Register4Widget> {
     );
   }
 
-  void _allowContacts() {
-    // Allow contacts — same as skip for now, 
-    // pwedeng palitan ng actual contacts permission later
-    final updatedData = {
-      ...widget.registrationData,
-      'contactName': '',
-      'contactNumber': '',
-    };
+  // Hihilingin ang permission, tapos ipapakita ang contact picker
+  Future<void> _allowContacts() async {
+    setState(() => _isRequestingPermission = true);
 
-    context.pushNamed(
-      Register5Widget.routeName,
-      extra: updatedData,
-    );
+    try {
+      final granted = await FlutterContacts.requestPermission(readonly: true);
+
+      setState(() => _isRequestingPermission = false);
+
+      if (!granted) {
+        if (mounted) {
+          ScaffoldMessenger.of(context).showSnackBar(
+            SnackBar(
+              content: Text(
+                  'Contacts permission was denied. You can add manually instead.'),
+              backgroundColor: Colors.red,
+            ),
+          );
+        }
+        return;
+      }
+
+      if (!mounted) return;
+
+      // Buksan ang contact picker screen, hintayin yung pinili ng user
+      final selectedContacts =
+          await Navigator.of(context).push<List<Map<String, dynamic>>>(
+        MaterialPageRoute(builder: (_) => const ContactPickerWidget()),
+      );
+
+      // Kung na-cancel o walang pinili, huwag munang tumuloy
+      if (selectedContacts == null || selectedContacts.isEmpty) {
+        return;
+      }
+
+      final updatedData = {
+        ...widget.registrationData,
+        'contacts': selectedContacts,
+      };
+
+      if (mounted) {
+        context.pushNamed(
+          Register5Widget.routeName,
+          extra: updatedData,
+        );
+      }
+    } catch (e) {
+      setState(() => _isRequestingPermission = false);
+      if (mounted) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(content: Text('Error accessing contacts: $e')),
+        );
+      }
+    }
   }
 
   @override
@@ -115,29 +156,29 @@ class _Register4WidgetState extends State<Register4Widget> {
             child: Column(
               mainAxisSize: MainAxisSize.max,
               children: [
-
-                // Title
                 Align(
                   alignment: AlignmentDirectional(-1.0, 0.0),
                   child: Padding(
-                    padding: EdgeInsetsDirectional.fromSTEB(25.0, 10.0, 0.0, 0.0),
+                    padding:
+                        EdgeInsetsDirectional.fromSTEB(25.0, 10.0, 0.0, 0.0),
                     child: Text(
                       'Let\'s setup\nyour Device',
                       style: FlutterFlowTheme.of(context).titleMedium.override(
-                            font: GoogleFonts.interTight(fontWeight: FontWeight.bold),
-                            color: FlutterFlowTheme.of(context).secondaryBackground,
+                            font: GoogleFonts.interTight(
+                                fontWeight: FontWeight.bold),
+                            color:
+                                FlutterFlowTheme.of(context).secondaryBackground,
                             fontSize: 35.0,
                             fontWeight: FontWeight.bold,
                           ),
                     ),
                   ),
                 ),
-
-                // Step 4/5
                 Align(
                   alignment: AlignmentDirectional(-1.0, 0.0),
                   child: Padding(
-                    padding: EdgeInsetsDirectional.fromSTEB(25.0, 15.0, 0.0, 0.0),
+                    padding:
+                        EdgeInsetsDirectional.fromSTEB(25.0, 15.0, 0.0, 0.0),
                     child: Text(
                       'Step 4/5',
                       style: TextStyle(
@@ -148,8 +189,6 @@ class _Register4WidgetState extends State<Register4Widget> {
                     ),
                   ),
                 ),
-
-                // Progress bar
                 Padding(
                   padding: EdgeInsetsDirectional.fromSTEB(10.0, 5.0, 10.0, 0.0),
                   child: LinearPercentIndicator(
@@ -160,15 +199,10 @@ class _Register4WidgetState extends State<Register4Widget> {
                     animateFromLastPercent: true,
                     progressColor: FlutterFlowTheme.of(context).primary,
                     backgroundColor: FlutterFlowTheme.of(context).accent4,
-                    center: Text(
-                      '80%',
-                      style: TextStyle(color: Colors.white),
-                    ),
+                    center: Text('80%', style: TextStyle(color: Colors.white)),
                     padding: EdgeInsets.zero,
                   ),
                 ),
-
-                // Who should we contact
                 Padding(
                   padding: EdgeInsetsDirectional.fromSTEB(20.0, 25.0, 0.0, 0.0),
                   child: Row(
@@ -191,8 +225,6 @@ class _Register4WidgetState extends State<Register4Widget> {
                     ],
                   ),
                 ),
-
-                // Voice Command Box
                 Padding(
                   padding: EdgeInsetsDirectional.fromSTEB(0.0, 15.0, 0.0, 0.0),
                   child: Container(
@@ -238,31 +270,31 @@ class _Register4WidgetState extends State<Register4Widget> {
                     ),
                   ),
                 ),
-
                 SizedBox(height: 30),
 
                 // Allow access to contacts Button
-                FFButtonWidget(
-                  onPressed: _allowContacts,
-                  text: 'Allow access to contacts',
-                  icon: Icon(Icons.arrow_forward_ios, size: 30.0),
-                  options: FFButtonOptions(
-                    width: 300.0,
-                    height: 60.0,
-                    color: FlutterFlowTheme.of(context).primary,
-                    iconAlignment: IconAlignment.end,
-                    textStyle: TextStyle(
-                      color: Colors.white,
-                      fontSize: 20.0,
-                      fontWeight: FontWeight.bold,
-                    ),
-                    borderRadius: BorderRadius.circular(24.0),
-                  ),
-                ),
+                _isRequestingPermission
+                    ? CircularProgressIndicator(color: Colors.white)
+                    : FFButtonWidget(
+                        onPressed: _allowContacts,
+                        text: 'Allow access to contacts',
+                        icon: Icon(Icons.arrow_forward_ios, size: 30.0),
+                        options: FFButtonOptions(
+                          width: 300.0,
+                          height: 60.0,
+                          color: FlutterFlowTheme.of(context).primary,
+                          iconAlignment: IconAlignment.end,
+                          textStyle: TextStyle(
+                            color: Colors.white,
+                            fontSize: 20.0,
+                            fontWeight: FontWeight.bold,
+                          ),
+                          borderRadius: BorderRadius.circular(24.0),
+                        ),
+                      ),
 
                 SizedBox(height: 20),
 
-                // Add contact manually Button
                 FFButtonWidget(
                   onPressed: _goToAddContact,
                   text: 'Add contact manually',
@@ -283,7 +315,6 @@ class _Register4WidgetState extends State<Register4Widget> {
 
                 SizedBox(height: 30),
 
-                // Skip for Now
                 GestureDetector(
                   onTap: _skipContact,
                   child: Text(
