@@ -99,7 +99,7 @@ class _AddcontactWidgetState extends State<AddcontactWidget> {
                       font: GoogleFonts.interTight(
                         fontWeight: FontWeight.bold,
                       ),
-                      color: FlutterFlowTheme.of(context).secondaryBackground,
+                      color: Colors.white,
                       fontSize: 50.0,
                       fontWeight: FontWeight.bold,
                     ),
@@ -203,7 +203,7 @@ class _AddcontactWidgetState extends State<AddcontactWidget> {
                       ),
                     ),
                     style: TextStyle(
-                      color: FlutterFlowTheme.of(context).accent1,
+                      color: Colors.white,
                       fontSize: 18.0,
                     ),
                   ),
@@ -238,7 +238,7 @@ class _AddcontactWidgetState extends State<AddcontactWidget> {
                       ),
                     ),
                     style: TextStyle(
-                      color: FlutterFlowTheme.of(context).accent1,
+                      color: Colors.white,
                       fontSize: 18.0,
                     ),
                   ),

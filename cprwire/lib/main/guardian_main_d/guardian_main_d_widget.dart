@@ -138,8 +138,7 @@ class _GuardianMainDWidgetState extends State<GuardianMainDWidget> {
                                           .bodyMedium
                                           .fontStyle,
                                     ),
-                                    color: FlutterFlowTheme.of(context)
-                                        .secondaryBackground,
+                                    color: Colors.white,
                                     fontSize: 20.0,
                                     letterSpacing: 2.0,
                                     fontWeight: FontWeight.bold,
@@ -178,8 +177,7 @@ class _GuardianMainDWidgetState extends State<GuardianMainDWidget> {
                                                     .bodyMedium
                                                     .fontStyle,
                                           ),
-                                          color: FlutterFlowTheme.of(context)
-                                              .secondaryBackground,
+                                          color: Colors.white,
                                           fontSize: 35.0,
                                           letterSpacing: 0.0,
                                           fontWeight: FontWeight.w600,
@@ -221,8 +219,7 @@ class _GuardianMainDWidgetState extends State<GuardianMainDWidget> {
                                                           .fontStyle,
                                                 ),
                                                 color:
-                                                    FlutterFlowTheme.of(context)
-                                                        .secondaryBackground,
+                                                    Colors.white,
                                                 fontSize: 20.0,
                                                 letterSpacing: 0.0,
                                                 fontWeight: FontWeight.w600,
@@ -301,9 +298,7 @@ class _GuardianMainDWidgetState extends State<GuardianMainDWidget> {
                                                                     .bodyMedium
                                                                     .fontStyle,
                                                           ),
-                                                          color: FlutterFlowTheme
-                                                                  .of(context)
-                                                              .secondaryBackground,
+                                                          color: Colors.white,
                                                           fontSize: 15.0,
                                                           letterSpacing: 0.0,
                                                           fontWeight:
@@ -334,9 +329,7 @@ class _GuardianMainDWidgetState extends State<GuardianMainDWidget> {
                                                                   .bodyMedium
                                                                   .fontStyle,
                                                         ),
-                                                        color: FlutterFlowTheme
-                                                                .of(context)
-                                                            .secondaryBackground,
+                                                        color: Colors.white,
                                                         fontSize: 20.0,
                                                         letterSpacing: 0.0,
                                                         fontWeight:
@@ -393,9 +386,7 @@ class _GuardianMainDWidgetState extends State<GuardianMainDWidget> {
                                                                     .bodyMedium
                                                                     .fontStyle,
                                                           ),
-                                                          color: FlutterFlowTheme
-                                                                  .of(context)
-                                                              .secondaryBackground,
+                                                          color: Colors.white,
                                                           fontSize: 15.0,
                                                           letterSpacing: 0.0,
                                                           fontWeight:
@@ -426,9 +417,7 @@ class _GuardianMainDWidgetState extends State<GuardianMainDWidget> {
                                                                   .bodyMedium
                                                                   .fontStyle,
                                                         ),
-                                                        color: FlutterFlowTheme
-                                                                .of(context)
-                                                            .secondaryBackground,
+                                                        color: Colors.white,
                                                         fontSize: 20.0,
                                                         letterSpacing: 0.0,
                                                         fontWeight:
@@ -467,8 +456,7 @@ class _GuardianMainDWidgetState extends State<GuardianMainDWidget> {
                                         .bodyMedium
                                         .fontStyle,
                                   ),
-                                  color: FlutterFlowTheme.of(context)
-                                      .secondaryBackground,
+                                  color: Colors.white,
                                   fontSize: 20.0,
                                   letterSpacing: 0.0,
                                   fontWeight: FontWeight.bold,
@@ -576,8 +564,7 @@ class _GuardianMainDWidgetState extends State<GuardianMainDWidget> {
                                           .titleMedium
                                           .fontStyle,
                                     ),
-                                    color: FlutterFlowTheme.of(context)
-                                        .secondaryBackground,
+                                    color: Colors.white,
                                     letterSpacing: 0.0,
                                     fontWeight: FontWeight.bold,
                                     fontStyle: FlutterFlowTheme.of(context)
@@ -620,8 +607,7 @@ class _GuardianMainDWidgetState extends State<GuardianMainDWidget> {
                                                     .bodyMedium
                                                     .fontStyle,
                                           ),
-                                          color: FlutterFlowTheme.of(context)
-                                              .secondaryBackground,
+                                          color: Colors.white,
                                           fontSize: 22.0,
                                           letterSpacing: 0.0,
                                           fontWeight: FontWeight.bold,
@@ -647,8 +633,7 @@ class _GuardianMainDWidgetState extends State<GuardianMainDWidget> {
                                                     .headlineSmall
                                                     .fontStyle,
                                           ),
-                                          color: FlutterFlowTheme.of(context)
-                                              .secondaryBackground,
+                                          color: Colors.white,
                                           fontSize: 30.0,
                                           letterSpacing: 0.0,
                                           fontWeight: FontWeight.w800,
@@ -725,8 +710,7 @@ class _GuardianMainDWidgetState extends State<GuardianMainDWidget> {
                                                     .bodyMedium
                                                     .fontStyle,
                                           ),
-                                          color: FlutterFlowTheme.of(context)
-                                              .secondaryBackground,
+                                          color: Colors.white,
                                           fontSize: 22.0,
                                           letterSpacing: 0.0,
                                           fontWeight: FontWeight.bold,
@@ -752,8 +736,7 @@ class _GuardianMainDWidgetState extends State<GuardianMainDWidget> {
                                                     .headlineSmall
                                                     .fontStyle,
                                           ),
-                                          color: FlutterFlowTheme.of(context)
-                                              .secondaryBackground,
+                                          color: Colors.white,
                                           fontSize: 25.0,
                                           letterSpacing: 0.0,
                                           fontWeight: FontWeight.w800,

@@ -299,8 +299,9 @@ class _EditUserAdminWidgetState extends State<EditUserAdminWidget> {
     );
   }
 
+  // Puti na ang kulay ng tina-type na text (dati'y accent1 / madilim)
   TextStyle _fieldTextStyle() {
-    return TextStyle(color: FlutterFlowTheme.of(context).accent1);
+    return const TextStyle(color: Colors.white);
   }
 
   @override
@@ -329,7 +330,7 @@ class _EditUserAdminWidgetState extends State<EditUserAdminWidget> {
             'ImpairGency',
             style: FlutterFlowTheme.of(context).titleLarge.override(
                   font: GoogleFonts.interTight(fontWeight: FontWeight.bold),
-                  color: FlutterFlowTheme.of(context).secondaryBackground,
+                  color: Colors.white,
                   fontSize: 50.0,
                   fontWeight: FontWeight.bold,
                 ),

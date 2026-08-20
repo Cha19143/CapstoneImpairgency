@@ -193,8 +193,7 @@ class _EmergencySOSWidgetState extends State<EmergencySOSWidget> {
                                   .override(
                                     font: GoogleFonts.interTight(
                                         fontWeight: FontWeight.bold),
-                                    color: FlutterFlowTheme.of(context)
-                                        .secondaryBackground,
+                                    color: Colors.white,
                                     fontSize: 40.0,
                                     letterSpacing: 0.0,
                                   ),
@@ -299,8 +298,7 @@ class _EmergencySOSWidgetState extends State<EmergencySOSWidget> {
                                     .override(
                                       font: GoogleFonts.interTight(
                                           fontWeight: FontWeight.bold),
-                                      color: FlutterFlowTheme.of(context)
-                                          .secondaryBackground,
+                                      color: Colors.white,
                                       fontSize: 30.0,
                                       letterSpacing: 0.0,
                                     ),

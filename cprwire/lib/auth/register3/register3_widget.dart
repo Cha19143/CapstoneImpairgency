@@ -124,7 +124,7 @@ class _Register3WidgetState extends State<Register3Widget> {
                       font: GoogleFonts.interTight(
                         fontWeight: FontWeight.bold,
                       ),
-                      color: FlutterFlowTheme.of(context).secondaryBackground,
+                      color: Colors.white,
                       fontSize: 50.0,
                       fontWeight: FontWeight.bold,
                     ),
@@ -149,7 +149,7 @@ class _Register3WidgetState extends State<Register3Widget> {
                       'Let\'s setup your\nDevice',
                       style: FlutterFlowTheme.of(context).titleMedium.override(
                             font: GoogleFonts.interTight(fontWeight: FontWeight.bold),
-                            color: FlutterFlowTheme.of(context).secondaryBackground,
+                            color: Colors.white,
                             fontSize: 45.0,
                             fontWeight: FontWeight.bold,
                           ),

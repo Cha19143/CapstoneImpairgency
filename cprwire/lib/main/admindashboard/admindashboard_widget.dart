@@ -152,8 +152,7 @@ class _AdmindashboardWidgetState extends State<AdmindashboardWidget> {
                                           .headlineMedium
                                           .fontStyle,
                                     ),
-                                    color: FlutterFlowTheme.of(context)
-                                        .secondaryBackground,
+                                    color: Colors.white,
                                     letterSpacing: 0.0,
                                     fontWeight: FontWeight.bold,
                                     fontStyle: FlutterFlowTheme.of(context)
@@ -176,8 +175,7 @@ class _AdmindashboardWidgetState extends State<AdmindashboardWidget> {
                                           .headlineLarge
                                           .fontStyle,
                                     ),
-                                    color: FlutterFlowTheme.of(context)
-                                        .secondaryBackground,
+                                    color: Colors.white,
                                     fontSize: 35.0,
                                     letterSpacing: 0.0,
                                     fontWeight: FontWeight.bold,
@@ -224,8 +222,7 @@ class _AdmindashboardWidgetState extends State<AdmindashboardWidget> {
                                       .headlineSmall
                                       .fontStyle,
                                 ),
-                                color: FlutterFlowTheme.of(context)
-                                    .secondaryBackground,
+                                color: Colors.white,
                                 fontSize: 25.0,
                                 letterSpacing: 2.0,
                                 fontWeight: FontWeight.bold,
@@ -273,8 +270,7 @@ class _AdmindashboardWidgetState extends State<AdmindashboardWidget> {
                                       .headlineSmall
                                       .fontStyle,
                                 ),
-                                color: FlutterFlowTheme.of(context)
-                                    .secondaryBackground,
+                                color: Colors.white,
                                 fontSize: 25.0,
                                 letterSpacing: 2.0,
                                 fontWeight: FontWeight.bold,
@@ -322,8 +318,7 @@ class _AdmindashboardWidgetState extends State<AdmindashboardWidget> {
                                       .headlineSmall
                                       .fontStyle,
                                 ),
-                                color: FlutterFlowTheme.of(context)
-                                    .secondaryBackground,
+                                color: Colors.white,
                                 fontSize: 25.0,
                                 letterSpacing: 2.0,
                                 fontWeight: FontWeight.bold,
